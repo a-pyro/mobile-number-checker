@@ -1,15 +1,5 @@
 import { IdAndNumbers } from './App'
 
-export class LocalStorage {
-  static get<T>(key: string) {
-    return JSON.parse(localStorage.getItem(key) || '[]') as T[]
-  }
-
-  static set<T>(key: string, value: T[]) {
-    localStorage.setItem(key, JSON.stringify(value))
-  }
-}
-
 export let isInstanciated = false
 
 export interface AnalyzedNumbers {
@@ -106,11 +96,12 @@ export class PhoneNumberAnalyzer {
     }
   }
 
-  analyzeListOfNumbers() {
-    if (this.#data.length === 0) {
+  analyzeListOfNumbers(listOfNums: IdAndNumbers = this.#data) {
+    console.log('>>>>>>>>>>analyzing list of numbers')
+    if (listOfNums.length === 0) {
       return
     }
-    this.#data.forEach(([, number]) => this.analyzeNumber(number))
+    listOfNums.forEach(([, number]) => this.analyzeNumber(number))
   }
 
   getCorrectedNumbers() {
